@@ -11,13 +11,13 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', function(socket){//it lets to listen for events
 	console.log('User connected via socket.io');
 
-	socket.on('message', function(message){
+	socket.on('message', function(message){ //io emits messages to all users including sender while socket.broadcast emits to all except user
 		console.log('message recieved: '+message.text);
 
-		socket.broadcast.emit('message', message);
+		io.emit('message', message);
 	});
 
-	socket.emit('message', {
+	socket.emit('message', { 
 		text: 'Welcome to the chat application'
 	});	
 }); 
